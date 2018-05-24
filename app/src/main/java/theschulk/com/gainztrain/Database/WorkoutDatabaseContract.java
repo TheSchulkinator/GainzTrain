@@ -1,5 +1,6 @@
 package theschulk.com.gainztrain.Database;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class WorkoutDatabaseContract {
@@ -7,6 +8,14 @@ public final class WorkoutDatabaseContract {
     private WorkoutDatabaseContract(){}
 
     public static class WorkoutEntry implements BaseColumns{
+
+        //URI for the content provider
+        public static final String AUTHORITY = "com.theschulk.gainztrain.provider";
+        public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+        public static final String MUSLCE_GROUP_PATH = "muscle_group";
+        public static final String WORKOUT_ENTRY_PATH = "workout_entry";
+        public static final String USER_PATH = "user-info";
+        public static final String CUSTOM_WORKOUT_PATH = "workout_entry";
 
         //table stores info about muscle group and individual exercises
         public static final String MUSCLE_GROUP_TABLE = "muscle_group";

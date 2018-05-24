@@ -16,6 +16,15 @@ public class WorkoutDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+        //Create all tables
+        sqLiteDatabase.execSQL(WorkoutDatabaseContract.WorkoutEntry.CREATE_MUSCLE_GROUP);
+        sqLiteDatabase.execSQL(WorkoutDatabaseContract.WorkoutEntry.CREATE_CUSTOM_WORKOUT);
+        sqLiteDatabase.execSQL(WorkoutDatabaseContract.WorkoutEntry.CREATE_USER);
+        sqLiteDatabase.execSQL(WorkoutDatabaseContract.WorkoutEntry.CREATE_WORKOUT_ENTRY);
+
+        //Create prepopulated data in table
+
+
     }
 
     @Override
