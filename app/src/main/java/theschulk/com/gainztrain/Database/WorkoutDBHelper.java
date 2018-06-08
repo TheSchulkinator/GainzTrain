@@ -4,13 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import theschulk.com.gainztrain.R;
+
 public class WorkoutDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "gainzTrain.db";
     private static final int DATABASE_VERSION = 1;
+    private Context mContext;
 
     public WorkoutDBHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -22,8 +26,13 @@ public class WorkoutDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(WorkoutDatabaseContract.WorkoutEntry.CREATE_USER);
         sqLiteDatabase.execSQL(WorkoutDatabaseContract.WorkoutEntry.CREATE_WORKOUT_ENTRY);
 
-        //Create prepopulated data in table
-
+        //populate the tables with default workout selections
+        WorkoutDatabaseTableCreator.createTable(R.string.back, R.array.back_array, sqLiteDatabase, mContext);
+        WorkoutDatabaseTableCreator.createTable(R.string.bicep, R.array.bicep_array, sqLiteDatabase, mContext);
+        WorkoutDatabaseTableCreator.createTable(R.string.tricep, R.array.tricep_array, sqLiteDatabase, mContext);
+        WorkoutDatabaseTableCreator.createTable(R.string.chest, R.array.chest_array, sqLiteDatabase, mContext);
+        WorkoutDatabaseTableCreator.createTable(R.string.leg, R.array.leg_array, sqLiteDatabase, mContext);
+        WorkoutDatabaseTableCreator.createTable(R.string.shoulder, R.array.shoulder_array, sqLiteDatabase, mContext);
 
     }
 

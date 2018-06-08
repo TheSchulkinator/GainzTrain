@@ -1,3 +1,83 @@
 <resources>
     <string name="app_name">GainzTrain</string>
+
+
+    //Arrays to populate tables with default data
+    <string-array name="chest_array">
+        <item>Bench Press</item>
+        <item>Incline Bench Press</item>
+        <item>Decline Bench Press</item>
+        <item>Dumbbell Bench Press</item>
+        <item>Incline Dumbbell Bench Press</item>
+        <item>Decline Dumbbell Bench Press</item>
+        <item>Dumbbell Fly</item>
+        <item>Incline Dumbbell Fly</item>
+        <item>Decline Dumbbell Fly</item>
+    </string-array>
+
+    <string-array name="tricep_array">
+        <item>Rope Push Down</item>
+        <item>V-Bar Push Down</item>
+        <item>EZ-Bar Skullcrusher</item>
+        <item>Pushback</item>
+        <item>Close Grip Bench Press</item>
+        <item>Single Arm Push Down</item>
+        <item>Overhead Tricep Extension</item>
+        <item>Single Overhead Tricep Extension</item>
+    </string-array>
+
+    <string-array name="bicep_array">
+        <item>Barbell Curl</item>
+        <item>Dumbbell Concentration Curl</item>
+        <item>EZ Barbell Curl</item>
+        <item>Preacher Curl</item>
+        <item>Cable Curl</item>
+        <item>Dumbbell Curl</item>
+        <item>Hammer Dumbbell Curl</item>
+        <item>Seated Dumbbell Curl</item>
+    </string-array>
+
+
+    <string-array name="back_array">
+        <item>Barbell Row</item>
+        <item>Dumbbell Row</item>
+        <item>Deadlift</item>
+        <item>Sumo Deadlift</item>
+        <item>Lat Pulldown</item>
+        <item>Seated Cable Row</item>
+        <item>Seated Wide Cable Row</item>
+        <item>T-Bar Row</item>
+    </string-array>
+
+    <string-array name="shoulder_array">
+        <item>Arnold Dumbbell Press</item>
+        <item>Barbell Shrug</item>
+        <item>Dumbbell Shrug</item>
+        <item>Barbell Military Press</item>
+        <item>Dumbbell Military Press</item>
+        <item>Front Plate Raise</item>
+        <item>Lateral Dumbbell Raise</item>
+        <item>Front Dumbbell Raise</item>
+        <item>Overhead Press</item>
+        <item>Rear Deltoid Dumbbell Raise</item>
+    </string-array>
+
+    <string-array name="leg_array">
+        <item>Calf Raise</item>
+        <item>Deadlift</item>
+        <item>Sumo Deadlift</item>
+        <item>Barbell Squat</item>
+        <item>Glute Raise</item>
+        <item>Romanian Deadlift</item>
+        <item>Leg Press</item>
+    </string-array>
+
+    //Muscle Group Names
+    <string name="tricep">Tricep</string>
+    <string name="bicep">Bicep</string>
+    <string name="chest">Chest</string>
+    <string name="leg">Leg</string>
+    <string name="back">Back</string>
+    <string name="shoulder">Shoulder</string>
+
 </resources>

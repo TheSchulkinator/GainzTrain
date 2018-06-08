@@ -74,5 +74,9 @@ public final class WorkoutDatabaseContract {
                 COLUMN_NAME_HEIGHT + " INTEGER NOT NULL, " +
                 COLUMN_NAME_TARGET_WEIGHT + " INTEGER" +
                 ");";
+
+        //Scripts to populate default table data
+
+
     }
 }
