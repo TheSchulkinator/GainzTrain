@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.AddMuscleGroupActivity">
+
+    <TextView
+        android:id="@+id/text_view_select_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        style="@style/AddMuscleGroupText"
+        />
+
+    <TextView
+        android:id="@+id/text_view_select_chest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/chest"
+        style="@style/AddMuscleGroupText"
+        />
+
+    <TextView
+        android:id="@+id/text_view_select_legs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/leg"
+        style="@style/AddMuscleGroupText"
+        />
+
+    <TextView
+        android:id="@+id/text_view_select_shoulder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/shoulder"
+        style="@style/AddMuscleGroupText"
+        />
+
+    <TextView
+        android:id="@+id/text_view_select_tricep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tricep"
+        style="@style/AddMuscleGroupText"
+        />
+
+    <TextView
+        android:id="@+id/text_view_select_bicep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bicep"
+        style="@style/AddMuscleGroupText"
+        />
+
+
+</LinearLayout>

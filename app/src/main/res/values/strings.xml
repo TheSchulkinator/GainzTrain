@@ -80,4 +80,10 @@
     <string name="back">Back</string>
     <string name="shoulder">Shoulder</string>
 
+    //Menu strings
+    <string name="menu_history">History</string>
+    <string name="menu_workout">Custom Workouts</string>
+    <string name="menu_body_tracker">Body Tracker</string>
+    <string name="menu_home">Home</string>
+
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_home"
+        app:showAsAction="never"
+        android:title="@string/menu_home"/>
+
+    <item
+        android:id="@+id/menu_history"
+        app:showAsAction="never"
+        android:title="@string/menu_history"/>
+
+    <item
+        android:id="@+id/menu_custom_workouts"
+        app:showAsAction="never"
+        android:title="@string/menu_workout"/>
+
+    <item
+        android:id="@+id/menu_body_tracker"
+        app:showAsAction="never"
+        android:title="@string/menu_body_tracker"/>
+
+</menu>
