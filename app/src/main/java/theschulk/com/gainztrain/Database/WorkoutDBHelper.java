@@ -6,10 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import theschulk.com.gainztrain.R;
 
+import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.CREATE_WORKOUT_ENTRY;
+import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE;
+
 public class WorkoutDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "gainzTrain.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
     private Context mContext;
 
     public WorkoutDBHelper(Context context){
@@ -38,6 +41,7 @@ public class WorkoutDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE " + WORKOUT_ENTRY_TABLE);
+        sqLiteDatabase.execSQL(CREATE_WORKOUT_ENTRY);
     }
 }

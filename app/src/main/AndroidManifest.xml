@@ -21,7 +21,10 @@
             android:name=".Database.WorkoutContentProvider"
             android:authorities="com.theschulk.gainztrain.provider" />
 
-        <activity android:name=".Activity.AddMuscleGroupActivity"></activity>
+        <activity android:name=".Activity.AddMuscleGroupActivity" />
+        <activity android:name=".Activity.AddExerciseActivity" />
+        <activity android:name=".Activity.EnterWorkoutActivity" />
+        <activity android:name=".Activity.CurrentExerciseDetail"></activity>
     </application>
 
 </manifest>

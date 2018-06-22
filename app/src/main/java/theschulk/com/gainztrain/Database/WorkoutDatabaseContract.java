@@ -22,6 +22,7 @@ public final class WorkoutDatabaseContract {
 
         //Table stores the info for individual workouts
         public static final String WORKOUT_ENTRY_TABLE = "workout_entry";
+        public static final String COLUMN_NAME_WORKOUT_EXERCISE_NAME = "workout_exercise_name";
         public static final String COLUMN_NAME_WEIGHT = "weight";
         public static final String COLUMN_NAME_REPS = "reps";
         public static final String COLUMN_NAME_SETS = "sets";
@@ -51,10 +52,11 @@ public final class WorkoutDatabaseContract {
         public static final String CREATE_WORKOUT_ENTRY = "CREATE TABLE " +
                 WORKOUT_ENTRY_TABLE + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME_WEIGHT + " INTEGER NOT NULL, " +
-                COLUMN_NAME_REPS + " INTEGER NOT NULL, " +
+                COLUMN_NAME_WORKOUT_EXERCISE_NAME + " TEXT NOT NULL, " +
+                COLUMN_NAME_WEIGHT + " INTEGER, " +
+                COLUMN_NAME_REPS + " INTEGER, " +
                 COLUMN_NAME_SETS + " INTEGER, " +
-                COLUMN_NAME_DATE + " DATETIME" +
+                COLUMN_NAME_DATE + " DATETIME DEFAULT (datetime('now','localtime'))" +
                 ");";
 
         public static final String CREATE_CUSTOM_WORKOUT = "CREATE TABLE " +

@@ -16,11 +16,9 @@ public class WorkoutContentProvider extends ContentProvider {
 
     static{
         uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE, 1);
-        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE + "/#", 2);
-        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, 3);
-        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE + "/#", 4);
-        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.MUSCLE_GROUP_TABLE, 5);
-        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.MUSCLE_GROUP_TABLE + "/#", 6);
+        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, 2);
+        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.MUSCLE_GROUP_TABLE, 3);
+        uriMatcher.addURI(WorkoutDatabaseContract.WorkoutEntry.AUTHORITY, WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE + "/*", 4);
     }
 
     @Override
@@ -32,20 +30,54 @@ public class WorkoutContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
+    public Cursor query(@NonNull Uri uri,
+                        @Nullable String[] projection,
+                        @Nullable String selection,
+                        @Nullable String[] selectionArgs,
+                        @Nullable String sortOrder) {
 
-        //TODO: Add individual query method for each case
-        //switch (uriMatcher.match(uri)){
+        Cursor queryCursor;
 
-       // }
+        switch (uriMatcher.match(uri)) {
 
-        Cursor queryCursor = db.query(WorkoutDatabaseContract.WorkoutEntry.MUSCLE_GROUP_TABLE, null,
-                null,
-                null,
-                null,
-                null,
-                null);
-        return queryCursor;
+            case 1:
+                queryCursor = db.query(WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE, null,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                return queryCursor;
+            case 2:
+                queryCursor = db.query(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, null,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                return queryCursor;
+            case 3:
+                queryCursor = db.query(WorkoutDatabaseContract.WorkoutEntry.MUSCLE_GROUP_TABLE, null,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                return queryCursor;
+            case 4:
+                queryCursor = db.query(true,
+                        WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        null,
+                        null);
+                return queryCursor;
+            default:
+                return  null;
+        }
     }
 
     @Nullable

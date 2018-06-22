@@ -26,14 +26,54 @@ public class AddMuscleGroupActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         //Setup onClickHandlers
-        mSelectShoulders.setOnClickListener(new View.OnClickListener() {
+        mSelectBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
+                addExerciseActivity(getString(R.string.back));
             }
         });
 
+        mSelectBicep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addExerciseActivity(getString(R.string.bicep));
+            }
+        });
+
+        mSelectChest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addExerciseActivity(getString(R.string.chest));
+            }
+        });
+
+        mSelectLegs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addExerciseActivity(getString(R.string.leg));
+            }
+        });
+
+        mSelectShoulders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addExerciseActivity(getString(R.string.shoulder));
+            }
+        });
+
+        mSelectTricep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addExerciseActivity(getString(R.string.tricep));
+            }
+        });
+
+    }
+
+    public void addExerciseActivity(String muscleGroupFilter){
+        Intent intent = new Intent(getApplicationContext(), AddExerciseActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT, muscleGroupFilter);
+        startActivity(intent);
     }
 
 }

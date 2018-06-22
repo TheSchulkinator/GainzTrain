@@ -13,9 +13,15 @@ import theschulk.com.gainztrain.R;
 public class CursorRecyclerViewAdapter extends RecyclerView.Adapter<CursorRecyclerViewAdapter.ViewHolder> {
 
     String[] mData;
+    String selectedExercise;
+    private final CursorOnClickHandler mCursorOnClickHandler;
 
-    public CursorRecyclerViewAdapter(){
+    public interface CursorOnClickHandler{
+        void onClick(String selectedExercise);
+    }
 
+    public CursorRecyclerViewAdapter(CursorOnClickHandler cursorOnClickHandler){
+            mCursorOnClickHandler = cursorOnClickHandler;
     }
 
     @NonNull
@@ -40,14 +46,21 @@ public class CursorRecyclerViewAdapter extends RecyclerView.Adapter<CursorRecycl
         return arrayLength;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        public final View mView;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public final TextView mSingleItemTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mView = itemView;
-            mSingleItemTextView = (TextView) itemView.findViewById(R.id.single_item_text_view);
+            mSingleItemTextView = itemView.findViewById(R.id.single_item_text_view);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            selectedExercise = mData[adapterPosition];
+
+            mCursorOnClickHandler.onClick(selectedExercise);
         }
     }
 

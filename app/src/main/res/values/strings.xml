@@ -86,4 +86,21 @@
     <string name="menu_body_tracker">Body Tracker</string>
     <string name="menu_home">Home</string>
 
+    //Home Activity
+    <string name="prompt_user">No Current Or Saved Workouts Add One</string>
+    <string name="current_workout">Current Workout Session</string>
+    <string name="saved_workouts">Saved Workouts</string>
+
+    //AddExerciseActivityStrings
+    <string name="select_an_exercise">Select an exercise</string>
+    <string name="add_other_exercise">Add Other:</string>
+    <string name="submit">Submit</string>
+    <string name="emptyEditTextToast">Please add an exercise before submitting</string>
+
+    //Edit Workout Activity
+    <string name="weight">Weight:</string>
+    <string name="reps">Reps:</string>
+    <string name="error_reps">Please add a number of repetitions before submitting</string>
+    <string name="error_weight">Please add a weight before submitting</string>
+
 </resources>
