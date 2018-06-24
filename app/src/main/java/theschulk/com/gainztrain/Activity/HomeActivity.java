@@ -19,8 +19,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.text.DateFormat;
 import java.util.Arrays;
@@ -30,6 +35,7 @@ import java.util.HashSet;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import theschulk.com.gainztrain.Adapters.CursorRecyclerViewAdapter;
+import theschulk.com.gainztrain.BuildConfig;
 import theschulk.com.gainztrain.Database.WorkoutDBHelper;
 import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
 import theschulk.com.gainztrain.R;
@@ -42,12 +48,12 @@ public class HomeActivity extends AppCompatActivity implements
     public static final int URL_SAVED_WORKOUT_LOADER = 1;
     CursorRecyclerViewAdapter mCursorRecyclerViewAdapter;
     LinearLayoutManager mLayoutManager;
-    RecyclerView homeActivityRecyclerView;
+    private AdView adView;
 
     //Butterknife setup
     @BindView(R.id.prompt_user_add_exercise) TextView promptUserAddExercise;
     @BindView(R.id.home_activity_title) TextView homeActivityTitle;
-    //@BindView(R.id.home_activity_recycler_view) RecyclerView homeActivityRecyclerView;
+    @BindView(R.id.home_activity_recycler_view) RecyclerView homeActivityRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,12 @@ public class HomeActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
+
+        //Test Api Key api key actually in BuildConfig.
+        adView = findViewById(R.id.adView);
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override
@@ -118,7 +130,28 @@ public class HomeActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        Intent intent;
+
+        switch(item.getItemId()){
+            case R.id.menu_body_tracker:
+                intent = new Intent(this, BodyTrackerActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_custom_workouts:
+                intent = new Intent(this, CustomWorkoutActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_home:
+                intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
+                return true;
+            case  R.id.menu_history:
+                intent = new Intent(this, HistoryActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @NonNull

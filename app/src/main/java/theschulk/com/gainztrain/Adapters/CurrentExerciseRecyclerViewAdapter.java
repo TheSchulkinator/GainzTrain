@@ -3,6 +3,7 @@ package theschulk.com.gainztrain.Adapters;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,23 +22,43 @@ public class CurrentExerciseRecyclerViewAdapter extends RecyclerView.Adapter<Cur
     @NonNull
     @Override
     public currentExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.current_exercise_double_item_view, parent, false);
+        return new currentExerciseViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull currentExerciseViewHolder holder, int position) {
 
+        String currentSet = Integer.toString(position + 1);
+
+        if(reps != null || reps.length > 0){
+            holder.currentSetsTextView.setText(currentSet);
+            holder.currentWeightTextView.setText(weight[position] + "lbs");
+            holder.currentRepsTextView.setText("x"+ reps[position]);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (null == reps) return  0;
+        int arrayLength = reps.length;
+        return arrayLength;
     }
 
     public class currentExerciseViewHolder extends RecyclerView.ViewHolder{
 
+        public final TextView currentSetsTextView;
+        public final TextView currentWeightTextView;
+        public final TextView currentRepsTextView;
+
         public currentExerciseViewHolder(View itemView) {
             super(itemView);
+
+            currentSetsTextView = itemView.findViewById(R.id.double_item_text_view_set);
+            currentWeightTextView = itemView.findViewById(R.id.double_item_text_view_weight);
+            currentRepsTextView = itemView.findViewById(R.id.double_item_text_view_reps);
         }
 
 
@@ -57,13 +78,13 @@ public class CurrentExerciseRecyclerViewAdapter extends RecyclerView.Adapter<Cur
                     String currentReps = cursor.getString(cursor.getColumnIndex(
                             WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_REPS
                     ));
-
-                    weight[counter] = currentWeight;
-                    reps[counter] = currentReps;
+                    if(currentWeight != null) weight[counter] = currentWeight;
+                    if(currentReps != null) reps[counter] = currentReps;
                     counter++;
                 }
                 while (cursor.moveToNext());
                 cursor.close();
+                notifyDataSetChanged();
             }
         }
     }

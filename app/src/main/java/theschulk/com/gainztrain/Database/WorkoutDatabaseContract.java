@@ -69,9 +69,9 @@ public final class WorkoutDatabaseContract {
         public static final String CREATE_USER = "CREATE TABLE " +
                 USER_INFO_TABLE + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME_AGE + " INTEGER NOT NULL, " +
+                COLUMN_NAME_AGE + " INTEGER, " +
                 COLUMN_NAME_USER_WEIGHT + " INTEGER NOT NULL, " +
-                COLUMN_NAME_HEIGHT + " INTEGER NOT NULL, " +
+                COLUMN_NAME_HEIGHT + " INTEGER, " +
                 COLUMN_NAME_TARGET_WEIGHT + " INTEGER" +
                 ");";
 

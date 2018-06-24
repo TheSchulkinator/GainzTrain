@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="theschulk.com.gainztrain">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,10 +25,23 @@
             android:name=".Database.WorkoutContentProvider"
             android:authorities="com.theschulk.gainztrain.provider" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="theschulk.com.gainztrain.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
         <activity android:name=".Activity.AddMuscleGroupActivity" />
         <activity android:name=".Activity.AddExerciseActivity" />
         <activity android:name=".Activity.EnterWorkoutActivity" />
-        <activity android:name=".Activity.CurrentExerciseDetail"></activity>
+        <activity android:name=".Activity.CurrentExerciseDetail" />
+        <activity android:name=".Activity.BodyTrackerActivity" />
+        <activity android:name=".Activity.CustomWorkoutActivity" />
+        <activity android:name=".Activity.HistoryActivity"></activity>
     </application>
 
 </manifest>
