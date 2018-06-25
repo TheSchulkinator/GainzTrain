@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "41869611348",
+    "firebase_url": "https://gainztrain-922e7.firebaseio.com",
+    "project_id": "gainztrain-922e7",
+    "storage_bucket": "gainztrain-922e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41869611348:android:81a087bd08af9313",
+        "android_client_info": {
+          "package_name": "theschulk.com.gainztrain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41869611348-hpt2t43k4no65i341ie9vj6s7tkrglu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDElWydp7kklYBMvMy0yzky8texVgQ8y8I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
