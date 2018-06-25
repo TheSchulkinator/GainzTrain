@@ -14,6 +14,8 @@ import theschulk.com.gainztrain.R;
 
 public class AddMuscleGroupActivity extends AppCompatActivity {
 
+    String intentWorkoutString;
+
     @BindView(R.id.text_view_select_back) TextView mSelectBack;
     @BindView(R.id.text_view_select_bicep) TextView mSelectBicep;
     @BindView(R.id.text_view_select_chest) TextView mSelectChest;
@@ -27,6 +29,13 @@ public class AddMuscleGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_muscle_group);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(Intent.EXTRA_COMPONENT_NAME)) {
+            intentWorkoutString = intent.getStringExtra(Intent.EXTRA_COMPONENT_NAME);
+        } else {
+            intentWorkoutString = null;
+        }
 
         //Setup onClickHandlers
         mSelectBack.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +85,11 @@ public class AddMuscleGroupActivity extends AppCompatActivity {
     public void addExerciseActivity(String muscleGroupFilter){
         Intent intent = new Intent(getApplicationContext(), AddExerciseActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, muscleGroupFilter);
+
+        if(intentWorkoutString != null){
+            intent.putExtra(Intent.EXTRA_COMPONENT_NAME, intentWorkoutString);
+        }
+
         startActivity(intent);
     }
 

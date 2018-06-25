@@ -80,6 +80,20 @@
     <string name="back">Back</string>
     <string name="shoulder">Shoulder</string>
 
+    <string-array name="muscle_group_array">
+        <item>Tricep</item>
+        <item>Bicep</item>
+        <item>Chest</item>
+        <item>Leg</item>
+        <item>Back</item>
+        <item>Shoulder</item>
+    </string-array>
+
+    <string-array name="weight_or_reps">
+        <item>Weight</item>
+        <item>Reps</item>
+    </string-array>
+
     //Menu strings
     <string name="menu_history">History</string>
     <string name="menu_workout">Custom Workouts</string>
@@ -113,5 +127,16 @@
     <string name="info_added">Added Successfully</string>
     <string name="take_photo">Take Photo</string>
     <string name="camera_permission">Please Add Camera Permission To Use This Feature</string>
+
+    <string name="custom_workout_title">Select or Add a Custom Workout</string>
+    <string name="add_otherWorkout">Add Other Workout</string>
+    <string name="custom_workout_error">Add Workout Before Submitting</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+
+    //Widget
+    <string name="widget_title" />
+    <string name="widget_view_key" translatable="false">widgetKey</string>
 
 </resources>

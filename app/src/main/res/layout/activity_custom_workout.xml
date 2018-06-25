@@ -6,4 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CustomWorkoutActivity">
 
+    <TextView
+        android:id="@+id/add_exercise_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/custom_workout_title"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/add_workout_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@+id/add_exercise_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center|bottom"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <EditText
+            android:id="@+id/add_other_workout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:hint="@string/add_otherWorkout"
+            android:imeOptions="actionDone"
+            android:inputType="text|textAutoCorrect" />
+
+        <Button
+            android:id="@+id/send_exercise_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="0"
+            android:backgroundTint="@color/colorAccent"
+            android:onClick="addWorkoutOnClick"
+            android:text="@string/submit" />
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

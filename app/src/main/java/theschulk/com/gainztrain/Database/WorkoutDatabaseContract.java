@@ -63,7 +63,7 @@ public final class WorkoutDatabaseContract {
                 CUSTOM_WORKOUT_TABLE + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME_WORKOUT_NAME + " TEXT NOT NULL, " +
-                COLUMN_NAME_WORKOUT_EXERCISE + " TEXT NOT NULL" +
+                COLUMN_NAME_WORKOUT_EXERCISE + " TEXT" +
                 ");";
 
         public static final String CREATE_USER = "CREATE TABLE " +

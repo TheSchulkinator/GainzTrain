@@ -39,6 +39,7 @@ public class AddExerciseActivity extends AppCompatActivity
     private CursorRecyclerViewAdapter mCursorRecyclerViewAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     SQLiteDatabase db;
+    private String intentWorkoutString;
 
     //Butterkinfe
     @BindView(R.id.add_exercise_recycler_view) RecyclerView addExerciseRecyclerView;
@@ -53,6 +54,12 @@ public class AddExerciseActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         columnFilterString = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if(intent.hasExtra(Intent.EXTRA_COMPONENT_NAME)) {
+            intentWorkoutString = intent.getStringExtra(Intent.EXTRA_COMPONENT_NAME);
+        } else {
+            intentWorkoutString = null;
+        }
+
         mCursorRecyclerViewAdapter = new CursorRecyclerViewAdapter(this);
 
         getSupportLoaderManager().initLoader(URL_ADD_EXERCISE_LOADER, null, this);
@@ -145,16 +152,23 @@ public class AddExerciseActivity extends AppCompatActivity
 
     @Override
     public void onClick(String selectedExercise) {
-        //TODO:  navigate to home and insert exercise into database
-        Date date = new Date();
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
-        String currentDate = dateFormat.format(date);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME, selectedExercise);
-        contentValues.put(WorkoutEntry.COLUMN_NAME_DATE, currentDate);
-        db.insert(WorkoutEntry.WORKOUT_ENTRY_TABLE, null, contentValues);
+        if(intentWorkoutString != null){
+            contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME, intentWorkoutString);
+            contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE, selectedExercise);
+            db.insert(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, null, contentValues);
+            Intent intent = new Intent(this,CustomWorkoutActivity.class);
+            startActivity(intent);
+        } else {
+            Date date = new Date();
+            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
+            String currentDate = dateFormat.format(date);
+            contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME, selectedExercise);
+            contentValues.put(WorkoutEntry.COLUMN_NAME_DATE, currentDate);
+            db.insert(WorkoutEntry.WORKOUT_ENTRY_TABLE, null, contentValues);
 
-        toEditActivityIntent(selectedExercise);
+            toEditActivityIntent(selectedExercise);
+        }
     }
 
     public void sendExerciseOnClick(View view){
@@ -169,21 +183,31 @@ public class AddExerciseActivity extends AppCompatActivity
 
         //add data to exercise table and to muscle group table for exercise to persist in future
         if (editTextString != null && !editTextString.equals("")) {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME, editTextString);
-            contentValues.put(WorkoutEntry.COLUMN_NAME_DATE, currentDate);
-            db.insert(WorkoutEntry.WORKOUT_ENTRY_TABLE, null, contentValues);
+            if (intentWorkoutString != null) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME, intentWorkoutString);
+                contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE, editTextString);
+                db.insert(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, null, contentValues);
+                Intent intent = new Intent(this, CustomWorkoutActivity.class);
+                startActivity(intent);
+            } else {
 
-            ContentValues muscleGroupContentValues = new ContentValues();
-            muscleGroupContentValues.put(WorkoutEntry.COLUMN_NAME_EXERCISE_NAME, editTextString);
-            muscleGroupContentValues.put(WorkoutEntry.COLUMN_NAME_MUSCLE_GROUP, columnFilterString);
-            db.insert(WorkoutEntry.MUSCLE_GROUP_TABLE, null, muscleGroupContentValues);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME, editTextString);
+                contentValues.put(WorkoutEntry.COLUMN_NAME_DATE, currentDate);
+                db.insert(WorkoutEntry.WORKOUT_ENTRY_TABLE, null, contentValues);
 
-            toEditActivityIntent(editTextString);
-        } else {
-            Toast toast = Toast.makeText(this, R.string.emptyEditTextToast, Toast.LENGTH_SHORT);
-            toast.show();
-        }
+                ContentValues muscleGroupContentValues = new ContentValues();
+                muscleGroupContentValues.put(WorkoutEntry.COLUMN_NAME_EXERCISE_NAME, editTextString);
+                muscleGroupContentValues.put(WorkoutEntry.COLUMN_NAME_MUSCLE_GROUP, columnFilterString);
+                db.insert(WorkoutEntry.MUSCLE_GROUP_TABLE, null, muscleGroupContentValues);
+
+                toEditActivityIntent(editTextString);
+            }
+            } else{
+                Toast toast = Toast.makeText(this, R.string.emptyEditTextToast, Toast.LENGTH_SHORT);
+                toast.show();
+            }
 
     }
 

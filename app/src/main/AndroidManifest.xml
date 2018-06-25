@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="theschulk.com.gainztrain">
 
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
-
 
     <application
         android:allowBackup="true"
@@ -23,8 +23,8 @@
 
         <provider
             android:name=".Database.WorkoutContentProvider"
-            android:authorities="com.theschulk.gainztrain.provider" />
-
+            android:authorities="com.theschulk.gainztrain.provider"
+            android:exported="true" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="theschulk.com.gainztrain.fileprovider"
@@ -32,7 +32,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity android:name=".Activity.AddMuscleGroupActivity" />
@@ -41,7 +41,36 @@
         <activity android:name=".Activity.CurrentExerciseDetail" />
         <activity android:name=".Activity.BodyTrackerActivity" />
         <activity android:name=".Activity.CustomWorkoutActivity" />
-        <activity android:name=".Activity.HistoryActivity"></activity>
+        <activity android:name=".Activity.HistoryActivity" />
+
+        <service
+            android:name=".Activity.GainzTrainService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service
+            android:name=".Service.FirebaseMessageReceiver">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".Service.FirebaseIdClass">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".Activity.GainzTrainWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/gainz_train_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

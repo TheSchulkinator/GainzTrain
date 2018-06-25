@@ -1,7 +1,9 @@
 package theschulk.com.gainztrain.Activity;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -49,6 +51,8 @@ public class HomeActivity extends AppCompatActivity implements
     CursorRecyclerViewAdapter mCursorRecyclerViewAdapter;
     LinearLayoutManager mLayoutManager;
     private AdView adView;
+    Boolean savedWorkoutSelected = false;
+    SQLiteDatabase db;
 
     //Butterknife setup
     @BindView(R.id.prompt_user_add_exercise) TextView promptUserAddExercise;
@@ -62,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         WorkoutDBHelper dbHelper = new WorkoutDBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db = dbHelper.getWritableDatabase();
         db = dbHelper.getReadableDatabase();
 
         mCursorRecyclerViewAdapter = new CursorRecyclerViewAdapter(this);
@@ -107,6 +111,24 @@ public class HomeActivity extends AppCompatActivity implements
     @Override
     protected void onRestart() {
         super.onRestart();
+        LoaderManager loaderManager = getSupportLoaderManager();
+        Loader<Cursor> workoutLoader = loaderManager.getLoader(URL_CURRENT_WORKOUT_LOADER);
+        if(workoutLoader == null){
+            loaderManager.
+                    initLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
+                    forceLoad();
+        }else {
+            loaderManager.
+                    restartLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
+                    forceLoad();
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         LoaderManager loaderManager = getSupportLoaderManager();
         Loader<Cursor> workoutLoader = loaderManager.getLoader(URL_CURRENT_WORKOUT_LOADER);
         if(workoutLoader == null){
@@ -219,9 +241,9 @@ public class HomeActivity extends AppCompatActivity implements
                         homeActivityTitle.setVisibility(View.VISIBLE);
                         promptUserAddExercise.setVisibility(View.GONE);
                         homeActivityRecyclerView.setVisibility(View.VISIBLE);
+                    }else {
+                        getSupportLoaderManager().initLoader(URL_SAVED_WORKOUT_LOADER,null, this);
                     }
-                } else {
-                    getSupportLoaderManager().initLoader(URL_SAVED_WORKOUT_LOADER,null, this);
                 }
                 break;
             case URL_SAVED_WORKOUT_LOADER:
@@ -239,11 +261,15 @@ public class HomeActivity extends AppCompatActivity implements
                         }
                         while (data.moveToNext());
                         data.close();
+
+                        String[] distinctArray = new HashSet<>(Arrays.asList(savedWorkouts)).toArray(new String[0]);
+
                         homeActivityTitle.setText(R.string.saved_workouts);
-                        mCursorRecyclerViewAdapter.setData(savedWorkouts);
+                        mCursorRecyclerViewAdapter.setData(distinctArray);
                         homeActivityTitle.setVisibility(View.VISIBLE);
                         promptUserAddExercise.setVisibility(View.GONE);
                         homeActivityRecyclerView.setVisibility(View.VISIBLE);
+                        savedWorkoutSelected = true;
                     }
                 }
                 break;
@@ -260,9 +286,47 @@ public class HomeActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(String selectedExercise) {
-        Context context = getApplicationContext();
-        Intent intent = new Intent(context, CurrentExerciseDetail.class);
-        intent.putExtra(Intent.EXTRA_TEXT, selectedExercise);
-        startActivity(intent);
+        if(savedWorkoutSelected){
+
+            String[] columnSelection = {WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE};
+            Cursor workoutQueryCursor = db.query(true,
+                    WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE,
+                    columnSelection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            if (workoutQueryCursor != null) {
+                String[] savedWorkouts = new String[workoutQueryCursor.getCount()];
+                int counter = 0;
+                if (workoutQueryCursor.moveToFirst()) {
+                    do {
+                        String currentExercise = workoutQueryCursor.getString(workoutQueryCursor.getColumnIndex(
+                                WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE
+                        ));
+
+                        savedWorkouts[counter] = currentExercise;
+                        counter++;
+                    }
+                    while (workoutQueryCursor.moveToNext());
+                    workoutQueryCursor.close();
+                }
+                mCursorRecyclerViewAdapter.setData(savedWorkouts);
+                savedWorkoutSelected = false;
+            }
+        }else{
+            Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            widgetIntent.putExtra(Intent.EXTRA_TEXT, selectedExercise);
+            sendBroadcast(widgetIntent);
+
+            Context context = getApplicationContext();
+            Intent intent = new Intent(context, CurrentExerciseDetail.class);
+            intent.putExtra(Intent.EXTRA_TEXT, selectedExercise);
+            startActivity(intent);
+        }
+
     }
 }
