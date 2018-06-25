@@ -139,4 +139,10 @@
     <string name="widget_title" />
     <string name="widget_view_key" translatable="false">widgetKey</string>
 
+    //Content Descriptions
+    <string name="add_exercise_button">Add Exercise</string>
+    <string name="selfie_progress_picture">Selfie Progress Picture</string>
+    <string name="add_weight">100</string>
+    <string name="add_reps">10</string>
+
 </resources>

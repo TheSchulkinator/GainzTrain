@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:hint="@string/add_weight"/>
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/edit_workout_reps"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:hint="@string/add_reps"/>
     </LinearLayout>
 
     <Button
@@ -58,6 +60,7 @@
         android:id="@+id/submit_workout_button"
         android:onClick="onClickSubmitWorkout"
         android:text="@string/submit"
-        android:backgroundTint="@color/colorAccent"/>
+        android:backgroundTint="@color/colorAccent"
+        android:contentDescription="@string/submit"/>
 
 </LinearLayout>

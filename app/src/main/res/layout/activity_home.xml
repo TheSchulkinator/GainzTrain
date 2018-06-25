@@ -46,9 +46,11 @@
         android:layout_margin="16dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_add_white_24dp"
         app:layout_constraintBottom_toTopOf="@+id/adView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/add_exercise_button"/>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
