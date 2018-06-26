@@ -1,5 +1,6 @@
 package theschulk.com.gainztrain.Adapters;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,11 @@ public class CurrentExerciseRecyclerViewAdapter extends RecyclerView.Adapter<Cur
 
     String[] weight;
     String[] reps;
+    Context mContext;
 
-    public CurrentExerciseRecyclerViewAdapter(){}
+    public CurrentExerciseRecyclerViewAdapter(Context context){
+        mContext = context;
+    }
 
 
     @NonNull
@@ -34,7 +38,7 @@ public class CurrentExerciseRecyclerViewAdapter extends RecyclerView.Adapter<Cur
 
         if(reps != null || reps.length > 0){
             holder.currentSetsTextView.setText(currentSet);
-            holder.currentWeightTextView.setText(weight[position] + "lbs");
+            holder.currentWeightTextView.setText(weight[position] + mContext.getString(R.string.lbs));
             holder.currentRepsTextView.setText("x"+ reps[position]);
         }
 

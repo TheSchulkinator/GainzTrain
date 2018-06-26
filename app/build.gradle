@@ -3,9 +3,9 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'DumpKeyStore'
-            keyPassword '1234'
-            storeFile file('/app/Keystore/keystore.jks')
+            keyAlias 'keystore'
+            keyPassword '123456'
+            storeFile file('../app/Keystore/keystore.jks')
             storePassword '123456'
         }
     }

@@ -146,6 +146,8 @@
     <string name="selfie_progress_picture">Selfie Progress Picture</string>
     <string name="add_weight">100</string>
     <string name="add_reps">10</string>
+    <string name="lbs">lbs</string>
+    <string name="inches">inches</string>
 
 
 </resources>

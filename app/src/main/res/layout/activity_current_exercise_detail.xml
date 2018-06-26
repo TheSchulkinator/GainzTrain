@@ -61,7 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/reps"
-            tools:layout_marginRight="4dp" />
+            tools:layout_marginRight="4dp"
+            tools:layout_marginEnd="4dp" />
 
         <EditText
             android:id="@+id/add_workout_reps"

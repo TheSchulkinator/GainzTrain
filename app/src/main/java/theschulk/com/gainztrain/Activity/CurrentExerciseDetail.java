@@ -50,7 +50,7 @@ public class CurrentExerciseDetail extends AppCompatActivity {
         db = dbHelper.getReadableDatabase();
         db = dbHelper.getWritableDatabase();
 
-        adapter = new CurrentExerciseRecyclerViewAdapter();
+        adapter = new CurrentExerciseRecyclerViewAdapter(this);
         sendCursorToAdapter();
 
         //Set up Views

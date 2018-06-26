@@ -55,7 +55,8 @@
             android:backgroundTint="@color/colorAccent"
             android:onClick="addWorkoutOnClick"
             android:text="@string/submit"
-            android:contentDescription="@string/submit"/>
+            android:contentDescription="@string/submit"
+            android:layout_marginEnd="8dp" />
 
     </LinearLayout>
 

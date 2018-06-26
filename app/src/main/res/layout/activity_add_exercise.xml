@@ -55,7 +55,7 @@
                 android:layout_weight="0"
                 android:onClick="sendExerciseOnClick"
                 android:backgroundTint="@color/colorAccent"
-                />
+                android:layout_marginEnd="8dp" />
 
         </LinearLayout>
     </RelativeLayout>
