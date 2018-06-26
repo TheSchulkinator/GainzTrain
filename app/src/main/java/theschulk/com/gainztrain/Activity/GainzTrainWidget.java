@@ -88,6 +88,13 @@ public class GainzTrainWidget extends AppWidgetProvider {
             editor.commit();
         }
 
+        final String action = intent.getAction();
+        if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+            ComponentName cn = new ComponentName(context, GainzTrainWidget.class);
+            mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widget_list);
+        }
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context.getApplicationContext());
         ComponentName thisWidget = new ComponentName(context.getApplicationContext(), GainzTrainWidget.class);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);

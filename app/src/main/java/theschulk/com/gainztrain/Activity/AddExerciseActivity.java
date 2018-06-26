@@ -135,7 +135,6 @@ public class AddExerciseActivity extends AppCompatActivity
                             counter++;
                         }
                         while (data.moveToNext());
-                        data.close();
                         mCursorRecyclerViewAdapter.setData(exerciseNamesByMuscleGroup);
                         break;
                     }
