@@ -244,9 +244,11 @@ public class BodyTrackerActivity extends AppCompatActivity {
         protected void onPostExecute(File[] files) {
             super.onPostExecute(files);
 
+            if (files.length > 0 && files != null){
             fileList = files;
             int filesLength = files.length - 1;
             Picasso.get().load(files[filesLength]).resize(1000,1000).centerCrop().into(imageSwitcher);
+            }
         }
     }
 
