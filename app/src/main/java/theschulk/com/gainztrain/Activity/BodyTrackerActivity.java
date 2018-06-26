@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -32,7 +33,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +50,7 @@ public class BodyTrackerActivity extends AppCompatActivity {
     String currentPhotoPath;
     Uri photoURI;
     Bitmap imageBitmap;
+    File[] fileList;
 
     @BindView(R.id.edit_user_weight) EditText editUserWeight;
     @BindView(R.id.edit_user_height) EditText editUserHeight;
@@ -61,6 +65,9 @@ public class BodyTrackerActivity extends AppCompatActivity {
         WorkoutDBHelper dbHelper = new WorkoutDBHelper(this);
         db = dbHelper.getWritableDatabase();
         db = dbHelper.getReadableDatabase();
+
+        cameraAsyncTask cameraTask = new cameraAsyncTask();
+        cameraTask.execute();
 
     }
 
@@ -173,7 +180,7 @@ public class BodyTrackerActivity extends AppCompatActivity {
           //  Bundle extras = data.getExtras();
           //  Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            Picasso.get().load(photoURI).into(imageSwitcher);
+            Picasso.get().load(photoURI).resize(1000,1000).centerCrop().into(imageSwitcher);
         }
     }
 
@@ -223,4 +230,24 @@ public class BodyTrackerActivity extends AppCompatActivity {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
+
+    public class cameraAsyncTask extends AsyncTask<Void, Void, File[]>{
+
+        @Override
+        protected File[] doInBackground(Void... voids) {
+            File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File[] files = directory.listFiles();
+            return files;
+        }
+
+        @Override
+        protected void onPostExecute(File[] files) {
+            super.onPostExecute(files);
+
+            fileList = files;
+            int filesLength = files.length - 1;
+            Picasso.get().load(files[filesLength]).resize(1000,1000).centerCrop().into(imageSwitcher);
+        }
+    }
+
 }
