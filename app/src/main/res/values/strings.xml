@@ -138,11 +138,14 @@
     //Widget
     <string name="widget_title" />
     <string name="widget_view_key" translatable="false">widgetKey</string>
+    <string name="widget_string">Select a exercise inside of the application to see past workouts</string>
+    <string name="update_widget">Update Widget</string>
 
     //Content Descriptions
     <string name="add_exercise_button">Add Exercise</string>
     <string name="selfie_progress_picture">Selfie Progress Picture</string>
     <string name="add_weight">100</string>
     <string name="add_reps">10</string>
+
 
 </resources>

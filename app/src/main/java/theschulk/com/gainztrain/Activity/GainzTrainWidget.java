@@ -1,5 +1,6 @@
 package theschulk.com.gainztrain.Activity;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -31,6 +32,19 @@ public class GainzTrainWidget extends AppWidgetProvider {
         views.setRemoteAdapter(R.id.widget_list, svcIntent);
         views.setTextViewText(R.id.appwidget_text, widgetView);
 
+        Intent intentUpdate = new Intent(context, GainzTrainWidget.class);
+        intentUpdate.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+
+        int[] idArray = new int[]{appWidgetId};
+        intentUpdate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, idArray);
+
+        PendingIntent pendingUpdate = PendingIntent.getBroadcast(
+                context, appWidgetId, intentUpdate,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        views.setOnClickPendingIntent(R.id.widget_button, pendingUpdate);
 
         return views;
     }

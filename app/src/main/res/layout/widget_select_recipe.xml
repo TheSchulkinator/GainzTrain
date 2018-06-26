@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Select a exercise inside of the application to see past workouts"
+        android:text="@string/widget_string"
         android:textAlignment="center" />
 
 </LinearLayout>
