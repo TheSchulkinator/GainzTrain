@@ -16,10 +16,6 @@ import android.widget.Spinner;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.text.DateFormat;
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import theschulk.com.gainztrain.Database.WorkoutDBHelper;

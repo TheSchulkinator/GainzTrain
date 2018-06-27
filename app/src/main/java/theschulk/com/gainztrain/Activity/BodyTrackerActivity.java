@@ -1,7 +1,6 @@
 package theschulk.com.gainztrain.Activity;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -222,7 +221,7 @@ public class BodyTrackerActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
-    public class cameraAsyncTask extends AsyncTask<Void, Void, File[]>{
+    public static class cameraAsyncTask extends AsyncTask<Void, Void, File[]>{
 
         @Override
         protected File[] doInBackground(Void... voids) {

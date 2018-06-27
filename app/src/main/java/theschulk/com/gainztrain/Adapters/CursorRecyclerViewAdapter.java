@@ -1,6 +1,5 @@
 package theschulk.com.gainztrain.Adapters;
 
-import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

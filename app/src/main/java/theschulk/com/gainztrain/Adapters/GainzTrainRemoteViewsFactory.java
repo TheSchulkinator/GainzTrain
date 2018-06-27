@@ -7,10 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
-import java.text.DateFormat;
-import java.util.Date;
-
 import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
 import theschulk.com.gainztrain.R;
 

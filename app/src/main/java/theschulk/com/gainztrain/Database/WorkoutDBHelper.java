@@ -3,15 +3,9 @@ package theschulk.com.gainztrain.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import theschulk.com.gainztrain.R;
-
 import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.CREATE_CUSTOM_WORKOUT;
-import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.CREATE_USER;
-import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.CREATE_WORKOUT_ENTRY;
 import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE;
-import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.USER_INFO_TABLE;
-import static theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE;
 
 public class WorkoutDBHelper extends SQLiteOpenHelper {
 
