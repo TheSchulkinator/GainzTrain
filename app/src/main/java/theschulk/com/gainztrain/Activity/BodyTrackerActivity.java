@@ -128,25 +128,6 @@ public class BodyTrackerActivity extends AppCompatActivity {
     public void onClickTakePhoto(View view){
 
        dispatchTakePictureIntent();
-       //galleryAddPic();
-
-        /*if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED  &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    1);
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    2);
-
-        } else {
-            dispatchTakePictureIntent();
-            galleryAddPic();
-        }*/
-
     }
 
     @Override
@@ -167,9 +148,6 @@ public class BodyTrackerActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-          //  Bundle extras = data.getExtras();
-          //  Bitmap imageBitmap = (Bitmap) extras.get("data");
-
             Picasso.get().load(photoURI).resize(1000,1000).centerCrop().into(imageSwitcher);
         }
     }
@@ -221,7 +199,7 @@ public class BodyTrackerActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
-    public static class cameraAsyncTask extends AsyncTask<Void, Void, File[]>{
+    public class cameraAsyncTask extends AsyncTask<Void, Void, File[]>{
 
         @Override
         protected File[] doInBackground(Void... voids) {
