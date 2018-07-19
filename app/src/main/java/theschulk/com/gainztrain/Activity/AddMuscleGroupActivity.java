@@ -80,7 +80,7 @@ public class AddMuscleGroupActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }z
 
     public void addExerciseActivity(String muscleGroupFilter){
         Intent intent = new Intent(getApplicationContext(), AddExerciseActivity.class);

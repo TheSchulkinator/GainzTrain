@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -76,6 +79,39 @@ public class EnterWorkoutActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+
+        switch(item.getItemId()){
+            case R.id.menu_body_tracker:
+                intent = new Intent(this, BodyTrackerActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_custom_workouts:
+                intent = new Intent(this, CustomWorkoutActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_home:
+                intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
+                return true;
+            case  R.id.menu_history:
+                intent = new Intent(this, HistoryActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

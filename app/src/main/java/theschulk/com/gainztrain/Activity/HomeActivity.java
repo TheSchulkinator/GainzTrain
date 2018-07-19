@@ -33,6 +33,7 @@ import java.util.HashSet;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import theschulk.com.gainztrain.Adapters.CursorRecyclerViewAdapter;
+import theschulk.com.gainztrain.BuildConfig;
 import theschulk.com.gainztrain.Database.WorkoutDBHelper;
 import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
 import theschulk.com.gainztrain.R;
@@ -98,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements
 
         //Test Api Key api key actually in BuildConfig.
         adView = findViewById(R.id.adView);
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+        MobileAds.initialize(this, BuildConfig.adMobApiKey);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
