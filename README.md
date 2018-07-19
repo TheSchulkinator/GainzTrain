@@ -7,8 +7,7 @@
   
 ## Getting started
  
- This application will soon be ready to download on the google play store stay tuned.  However, if you want to give this a try now just 
- clone the project and start up your favorite emulator to join in now!
+You can download the project on the google play store now! [GainzTrain on Goolge Play](https://play.google.com/store/apps/details?id=theschulk.com.gainztrain)
  
 ## Contact information
  
