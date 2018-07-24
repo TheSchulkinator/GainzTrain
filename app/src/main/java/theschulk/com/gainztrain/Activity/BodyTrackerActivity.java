@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import theschulk.com.gainztrain.Adapters.ImageViewAdapter;
 import theschulk.com.gainztrain.Database.WorkoutDBHelper;
 import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
 import theschulk.com.gainztrain.R;
@@ -41,10 +43,10 @@ public class BodyTrackerActivity extends AppCompatActivity {
     String currentPhotoPath;
     Uri photoURI;
     File[] fileList;
+    ImageViewAdapter imageViewAdapter;
 
     @BindView(R.id.edit_user_weight) EditText editUserWeight;
     @BindView(R.id.edit_user_height) EditText editUserHeight;
-    @BindView(R.id.body_tracker_image_switcher) ImageView imageSwitcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +58,15 @@ public class BodyTrackerActivity extends AppCompatActivity {
         db = dbHelper.getWritableDatabase();
         db = dbHelper.getReadableDatabase();
 
-        cameraAsyncTask cameraTask = new cameraAsyncTask();
-        cameraTask.execute();
+        imageViewAdapter = new ImageViewAdapter(this);
 
+        //cameraAsyncTask cameraTask = new cameraAsyncTask();
+        //cameraTask.execute();
+        File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File[] files = directory.listFiles();
+        imageViewAdapter.setFiles(files);
+        ViewPager viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(imageViewAdapter);
     }
 
     public void onClickSubmitUserInfo(View view){
@@ -148,7 +156,8 @@ public class BodyTrackerActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Picasso.get().load(photoURI).resize(1000,1000).centerCrop().into(imageSwitcher);
+            cameraAsyncTask cameraTask = new cameraAsyncTask();
+            cameraTask.execute();
         }
     }
 
@@ -213,9 +222,12 @@ public class BodyTrackerActivity extends AppCompatActivity {
             super.onPostExecute(files);
 
             if (files.length > 0 && files != null){
-            fileList = files;
-            int filesLength = files.length - 1;
-            Picasso.get().load(files[filesLength]).resize(1000,1000).centerCrop().into(imageSwitcher);
+            //fileList = files;
+            //int filesLength = files.length - 1;
+            //Picasso.get().load(files[filesLength]).resize(1000,1000).centerCrop().into(imageSwitcher);
+
+            //imageViewAdapter.setFiles(files);
+            //viewPager.setAdapter(imageViewAdapter);
             }
         }
     }
