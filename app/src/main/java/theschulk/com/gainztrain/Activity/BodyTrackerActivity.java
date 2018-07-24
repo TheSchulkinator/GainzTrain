@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -19,10 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +38,7 @@ public class BodyTrackerActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String currentPhotoPath;
     Uri photoURI;
-    File[] fileList;
+    File[] files;
     ImageViewAdapter imageViewAdapter;
 
     @BindView(R.id.edit_user_weight) EditText editUserWeight;
@@ -58,12 +54,10 @@ public class BodyTrackerActivity extends AppCompatActivity {
         db = dbHelper.getWritableDatabase();
         db = dbHelper.getReadableDatabase();
 
+        //get the local camera files and set the pageradapter
         imageViewAdapter = new ImageViewAdapter(this);
-
-        //cameraAsyncTask cameraTask = new cameraAsyncTask();
-        //cameraTask.execute();
         File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File[] files = directory.listFiles();
+        files = directory.listFiles();
         imageViewAdapter.setFiles(files);
         ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(imageViewAdapter);
@@ -156,8 +150,7 @@ public class BodyTrackerActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            cameraAsyncTask cameraTask = new cameraAsyncTask();
-            cameraTask.execute();
+            imageViewAdapter.setFiles(files);
         }
     }
 
@@ -207,29 +200,4 @@ public class BodyTrackerActivity extends AppCompatActivity {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
-
-    public class cameraAsyncTask extends AsyncTask<Void, Void, File[]>{
-
-        @Override
-        protected File[] doInBackground(Void... voids) {
-            File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File[] files = directory.listFiles();
-            return files;
-        }
-
-        @Override
-        protected void onPostExecute(File[] files) {
-            super.onPostExecute(files);
-
-            if (files.length > 0 && files != null){
-            //fileList = files;
-            //int filesLength = files.length - 1;
-            //Picasso.get().load(files[filesLength]).resize(1000,1000).centerCrop().into(imageSwitcher);
-
-            //imageViewAdapter.setFiles(files);
-            //viewPager.setAdapter(imageViewAdapter);
-            }
-        }
-    }
-
 }
