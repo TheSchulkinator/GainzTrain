@@ -27,7 +27,8 @@ import theschulk.com.gainztrain.Database.WorkoutDBHelper;
 import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
 import theschulk.com.gainztrain.R;
 
-public class CurrentExerciseDetail extends AppCompatActivity {
+public class
+CurrentExerciseDetail extends AppCompatActivity {
 
     SQLiteDatabase db;
     String currentExerciseString;

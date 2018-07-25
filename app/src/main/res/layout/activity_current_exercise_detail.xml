@@ -12,16 +12,67 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/current_exercise_recycler_view"
-        android:layout_width="match_parent"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_exercise_title"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/current_exercise_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/previous_exercise_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="184dp" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -43,8 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="@string/add_weight"/>
+            android:hint="@string/add_weight"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,16 +112,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/reps"
-            tools:layout_marginRight="4dp"
-            tools:layout_marginEnd="4dp" />
+            tools:layout_marginEnd="4dp"
+            tools:layout_marginRight="4dp" />
 
         <EditText
             android:id="@+id/add_workout_reps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="@string/add_reps"/>
+            android:hint="@string/add_reps"
+            android:inputType="number" />
     </LinearLayout>
 
     <Button
@@ -79,9 +130,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
+        android:contentDescription="@string/current_exercise_add_exercise"
         android:onClick="addExerciseOnClick"
         android:text="@string/current_exercise_add_exercise"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="@string/current_exercise_add_exercise"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
