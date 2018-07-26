@@ -151,10 +151,10 @@ CurrentExerciseDetail extends AppCompatActivity {
                 while (dateCursor.moveToNext());
                 dateCursor.close();
             }
-        } else
+        }
 
         if(previousDate != null && previousDate !=""){
-
+            String other = previousDate;
         }
 
     }
