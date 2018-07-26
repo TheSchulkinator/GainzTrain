@@ -35,6 +35,7 @@ CurrentExerciseDetail extends AppCompatActivity {
     LinearLayoutManager mLayoutManager;
 
     @BindView(R.id.current_exercise_recycler_view) RecyclerView currentExerciseRecyclerView;
+    @BindView(R.id.previous_exercise_recycler_view) RecyclerView previousExerciseRecyclerView;
     @BindView(R.id.current_exercise_title) TextView currentExerciseTitle;
     @BindView(R.id.current_exercise_add_exercise_button) Button addExerciseButton;
     @BindView(R.id.add_workout_reps) EditText addWorkoutReps;
@@ -64,6 +65,8 @@ CurrentExerciseDetail extends AppCompatActivity {
 
 
         currentExerciseTitle.setText(currentExerciseString);
+
+        sendPreviousDataToCursor();
 
     }
 
@@ -121,6 +124,39 @@ CurrentExerciseDetail extends AppCompatActivity {
                 null,
                 null);
         adapter.setData(cursor);
+    }
+
+    public void sendPreviousDataToCursor(){
+        //See if the exercise has been recorded if so find the date in order to filter
+        String previousDate = "";
+
+        Cursor dateCursor = db.rawQuery("SELECT * FROM " +
+                WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE +
+        " WHERE " + WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE +
+        " = ( SELECT MAX(" + WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE +") FROM " +
+                WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE +
+        " WHERE " + WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE + " < (SELECT MAX(" +
+                WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE + ") FROM " +
+                WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE +
+                        " ) ) ;", null );
+
+        if (dateCursor != null) {
+            if (dateCursor.moveToFirst()) {
+                do {
+                    previousDate = dateCursor.getString(dateCursor.getColumnIndex(
+                            WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE
+                    ));
+
+                }
+                while (dateCursor.moveToNext());
+                dateCursor.close();
+            }
+        } else
+
+        if(previousDate != null && previousDate !=""){
+
+        }
+
     }
 
     @Override
