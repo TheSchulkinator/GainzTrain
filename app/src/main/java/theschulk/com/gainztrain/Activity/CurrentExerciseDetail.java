@@ -33,6 +33,7 @@ CurrentExerciseDetail extends AppCompatActivity {
     SQLiteDatabase db;
     String currentExerciseString;
     LinearLayoutManager mLayoutManager;
+    LinearLayoutManager previousLayoutManager;
 
     @BindView(R.id.current_exercise_recycler_view) RecyclerView currentExerciseRecyclerView;
     @BindView(R.id.previous_exercise_recycler_view) RecyclerView previousExerciseRecyclerView;
@@ -41,6 +42,7 @@ CurrentExerciseDetail extends AppCompatActivity {
     @BindView(R.id.add_workout_reps) EditText addWorkoutReps;
     @BindView(R.id.add_workout_weight) EditText addWorkoutWeight;
     CurrentExerciseRecyclerViewAdapter adapter;
+    CurrentExerciseRecyclerViewAdapter previousAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,11 @@ CurrentExerciseDetail extends AppCompatActivity {
         db = dbHelper.getReadableDatabase();
         db = dbHelper.getWritableDatabase();
 
+        //set adapters for recycler views
         adapter = new CurrentExerciseRecyclerViewAdapter(this);
         sendCursorToAdapter();
+        previousAdapter = new CurrentExerciseRecyclerViewAdapter(this);
+        sendPreviousDataToCursor();
 
         //Set up Views
         mLayoutManager = new LinearLayoutManager(this);
@@ -66,7 +71,10 @@ CurrentExerciseDetail extends AppCompatActivity {
 
         currentExerciseTitle.setText(currentExerciseString);
 
-        sendPreviousDataToCursor();
+        previousLayoutManager = new LinearLayoutManager(this);
+        previousExerciseRecyclerView.setLayoutManager(previousLayoutManager);
+        previousExerciseRecyclerView.setAdapter(previousAdapter);
+
 
     }
 
@@ -153,8 +161,22 @@ CurrentExerciseDetail extends AppCompatActivity {
             }
         }
 
+        //if a current date exists get records and pass to recycler view adapter
         if(previousDate != null && previousDate !=""){
-            String other = previousDate;
+            String[] selectionArgs = {previousDate, currentExerciseString};
+            String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE + "=? AND " +
+                    WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME + "=?" +
+                    " AND " + WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_REPS + " IS NOT NULL";
+
+            //query database and pass to recyclerview adapter
+            Cursor cursor = db.query(WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE,
+                    null ,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null);
+            previousAdapter.setData(cursor);
         }
 
     }
