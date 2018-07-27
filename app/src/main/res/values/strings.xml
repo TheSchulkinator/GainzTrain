@@ -116,6 +116,9 @@
     <string name="reps">Reps: </string>
     <string name="error_reps">Please add a number of repetitions before submitting</string>
     <string name="error_weight">Please add a weight before submitting</string>
+    <string name="previous">Previous</string>
+    <string name="current">Current</string>
+
 
     //Current Exercise Strings
     <string name="current_exercise_add_exercise">Add Exercise</string>

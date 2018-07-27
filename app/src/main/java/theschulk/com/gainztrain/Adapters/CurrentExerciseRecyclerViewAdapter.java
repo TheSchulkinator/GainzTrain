@@ -37,7 +37,7 @@ public class CurrentExerciseRecyclerViewAdapter extends RecyclerView.Adapter<Cur
         String currentSet = Integer.toString(position + 1);
 
         if(reps != null || reps.length > 0){
-            holder.currentSetsTextView.setText(currentSet);
+            holder.currentSetsTextView.setText(currentSet + ".");
             holder.currentWeightTextView.setText(weight[position] + mContext.getString(R.string.lbs));
             holder.currentRepsTextView.setText("x"+ reps[position]);
         }
