@@ -49,18 +49,14 @@
             android:name=".Activity.GainzTrainService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <service
-            android:name=".Service.FirebaseMessageReceiver">
+        <service android:name=".Service.FirebaseMessageReceiver">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".Service.FirebaseIdClass">
+        <service android:name=".Service.FirebaseIdClass">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -73,6 +69,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/gainz_train_widget_info" />
         </receiver>
+
+        <activity android:name=".Activity.CustomWorkoutDetailActivity"></activity>
     </application>
 
 </manifest>
