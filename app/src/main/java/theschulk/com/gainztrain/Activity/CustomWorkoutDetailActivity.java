@@ -7,13 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import theschulk.com.gainztrain.Adapters.CursorRecyclerViewAdapter;
 import theschulk.com.gainztrain.Database.WorkoutDBHelper;
 import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
@@ -22,6 +26,7 @@ import theschulk.com.gainztrain.R;
 public class CustomWorkoutDetailActivity extends AppCompatActivity implements CursorRecyclerViewAdapter.CursorOnClickHandler {
 
     @BindView(R.id.custom_workout_detail_recycler_view) RecyclerView customWorkoutDetailRecyclerView;
+    @BindView(R.id.custom_exercise_detail_tile) TextView customDetailTitle;
 
     String customWorkoutDetail;
     CursorRecyclerViewAdapter adapter;
@@ -31,6 +36,7 @@ public class CustomWorkoutDetailActivity extends AppCompatActivity implements Cu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_workout_detail);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         if(intent.hasExtra(Intent.EXTRA_COMPONENT_NAME)) {
@@ -57,6 +63,13 @@ public class CustomWorkoutDetailActivity extends AppCompatActivity implements Cu
         db = dbHelper.getWritableDatabase();
 
         adapter = new CursorRecyclerViewAdapter(this);
+        customQueryArray();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        customWorkoutDetailRecyclerView.setLayoutManager(layoutManager);
+        customWorkoutDetailRecyclerView.setAdapter(adapter);
+
+        customDetailTitle.setText(customWorkoutDetail);
     }
 
     @Override
@@ -94,9 +107,9 @@ public class CustomWorkoutDetailActivity extends AppCompatActivity implements Cu
 
     public void customQueryArray() {
 
-        String[] selectionArgs = {WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME};
+        String[] selectionArgs = {customWorkoutDetail};
         String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME + "=?";
-        Cursor workoutQueryCursor = db.query(true,
+        Cursor workoutQueryCursor = db.query(false,
                 WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE,
                 null,
                 selection,
