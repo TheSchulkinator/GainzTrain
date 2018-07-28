@@ -107,7 +107,7 @@ public class CustomWorkoutActivity extends AppCompatActivity implements CursorRe
 
     @Override
     public void onClick(String selectedExercise) {
-        Intent intent = new Intent(this, AddMuscleGroupActivity.class);
+        Intent intent = new Intent(this, CustomWorkoutDetailActivity.class);
         intent.putExtra(Intent.EXTRA_COMPONENT_NAME, selectedExercise);
         startActivity(intent);
     }
