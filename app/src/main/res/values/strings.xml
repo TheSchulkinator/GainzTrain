@@ -151,6 +151,7 @@
     <string name="add_reps">10</string>
     <string name="lbs">lbs</string>
     <string name="inches">inches</string>
+    <string name="custom_workout_button_description">Add custom workout</string>
 
 
 </resources>
