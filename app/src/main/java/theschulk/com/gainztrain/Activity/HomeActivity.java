@@ -39,11 +39,8 @@ import theschulk.com.gainztrain.Database.WorkoutDatabaseContract;
 import theschulk.com.gainztrain.R;
 
 public class HomeActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor>,
         CursorRecyclerViewAdapter.CursorOnClickHandler {
 
-    public static final int URL_CURRENT_WORKOUT_LOADER = 0;
-    public static final int URL_SAVED_WORKOUT_LOADER = 1;
     CursorRecyclerViewAdapter mCursorRecyclerViewAdapter;
     LinearLayoutManager mLayoutManager;
     private AdView adView;
@@ -67,19 +64,7 @@ public class HomeActivity extends AppCompatActivity implements
 
         mCursorRecyclerViewAdapter = new CursorRecyclerViewAdapter(this);
 
-        //query the database if current workout session return else saved workouts
-        LoaderManager loaderManager = getSupportLoaderManager();
-        Loader<Cursor> workoutLoader = loaderManager.getLoader(URL_CURRENT_WORKOUT_LOADER);
-        if(workoutLoader == null){
-            loaderManager.
-                    initLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
-                    forceLoad();
-        }else {
-            loaderManager.
-                    restartLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
-                    forceLoad();
-
-        }
+       currentExerciseQuery();
 
         //Setup RecyclerView
         homeActivityRecyclerView = findViewById(R.id.home_activity_recycler_view);
@@ -102,41 +87,6 @@ public class HomeActivity extends AppCompatActivity implements
         MobileAds.initialize(this, BuildConfig.adMobApiKey);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        LoaderManager loaderManager = getSupportLoaderManager();
-        Loader<Cursor> workoutLoader = loaderManager.getLoader(URL_CURRENT_WORKOUT_LOADER);
-        if(workoutLoader == null){
-            loaderManager.
-                    initLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
-                    forceLoad();
-        }else {
-            loaderManager.
-                    restartLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
-                    forceLoad();
-
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        LoaderManager loaderManager = getSupportLoaderManager();
-        Loader<Cursor> workoutLoader = loaderManager.getLoader(URL_CURRENT_WORKOUT_LOADER);
-        if(workoutLoader == null){
-            loaderManager.
-                    initLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
-                    forceLoad();
-        }else {
-            loaderManager.
-                    restartLoader(URL_CURRENT_WORKOUT_LOADER, null, this).
-                    forceLoad();
-
-        }
     }
 
     @Override
@@ -172,124 +122,18 @@ public class HomeActivity extends AppCompatActivity implements
         }
     }
 
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-
-        Uri authorityUri = WorkoutDatabaseContract.WorkoutEntry.BASE_CONTENT_URI;
-        Uri pathUri;
-
-        switch(id){
-            case (URL_CURRENT_WORKOUT_LOADER):
-                //setup filter for current date
-                String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE + "=?";
-                Date date = new Date();
-                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
-                String[] selectionArgs = {dateFormat.format(date)};
-
-                pathUri = authorityUri.buildUpon().
-                        appendPath(WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE).
-                        build();
-
-                return new CursorLoader(this,
-                        pathUri,
-                        null,
-                        selection,
-                        selectionArgs,
-                        null);
-            case (URL_SAVED_WORKOUT_LOADER):
-                pathUri = authorityUri.buildUpon().
-                        appendPath(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE).
-                        build();
-
-                return new CursorLoader(this, pathUri, null, null, null, null);
-            default:
-                return null;
-        }
-
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-
-        //If there is a workout today show exercises, otherwise show saved workouts, lastly prompt user to add exercise
-        switch (loader.getId()) {
-            case URL_CURRENT_WORKOUT_LOADER:
-                if (data != null) {
-                    String[] currentWorkout = new String[data.getCount()];
-                    int counter = 0;
-                    if (data.moveToFirst()) {
-                        do {
-                            String currentExercise = data.getString(data.getColumnIndex(
-                                    WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME
-                            ));
-
-                            currentWorkout[counter] = currentExercise;
-                            counter++;
-                        }
-                        while (data.moveToNext());
-                        data.close();
-
-                        String[] distinctArray = new HashSet<>(Arrays.asList(currentWorkout)).toArray(new String[0]);
-
-                        homeActivityTitle.setText(R.string.current_workout);
-                        mCursorRecyclerViewAdapter.setData(distinctArray);
-                        homeActivityTitle.setVisibility(View.VISIBLE);
-                        promptUserAddExercise.setVisibility(View.GONE);
-                        homeActivityRecyclerView.setVisibility(View.VISIBLE);
-                    }else {
-                        getSupportLoaderManager().initLoader(URL_SAVED_WORKOUT_LOADER,null, this);
-                    }
-                }
-                break;
-            case URL_SAVED_WORKOUT_LOADER:
-                if (data != null) {
-                    String[] savedWorkouts = new String[data.getCount()];
-                    int counter = 0;
-                    if (data.moveToFirst()) {
-                        do {
-                            String currentExercise = data.getString(data.getColumnIndex(
-                                    WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME
-                            ));
-
-                            savedWorkouts[counter] = currentExercise;
-                            counter++;
-                        }
-                        while (data.moveToNext());
-                        data.close();
-
-                        String[] distinctArray = new HashSet<>(Arrays.asList(savedWorkouts)).toArray(new String[0]);
-
-                        homeActivityTitle.setText(R.string.saved_workouts);
-                        mCursorRecyclerViewAdapter.setData(distinctArray);
-                        homeActivityTitle.setVisibility(View.VISIBLE);
-                        promptUserAddExercise.setVisibility(View.GONE);
-                        homeActivityRecyclerView.setVisibility(View.VISIBLE);
-                        savedWorkoutSelected = true;
-                    }
-                }
-                break;
-            default:
-            promptUserAddExercise.setVisibility(View.VISIBLE);
-            homeActivityTitle.setVisibility(View.GONE);
-            homeActivityRecyclerView.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-    }
-
     @Override
     public void onClick(String selectedExercise) {
         if(savedWorkoutSelected){
 
-            String[] columnSelection = {WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE};
+            String[] selectionArgs = {selectedExercise};
+            String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME + "=? AND " +
+                    WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE + " IS NOT NULL";
             Cursor workoutQueryCursor = db.query(true,
                     WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE,
-                    columnSelection,
                     null,
-                    null,
+                    selection,
+                    selectionArgs,
                     null,
                     null,
                     null,
@@ -322,6 +166,95 @@ public class HomeActivity extends AppCompatActivity implements
             Intent intent = new Intent(context, CurrentExerciseDetail.class);
             intent.putExtra(Intent.EXTRA_TEXT, selectedExercise);
             startActivity(intent);
+        }
+
+    }
+
+    //create database query methods that do not use cursor loader
+    public void currentExerciseQuery(){
+        //query the database for current today's exercise records
+        String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_DATE + "=?";
+        Date date = new Date();
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
+        String[] selectionArgs = {dateFormat.format(date)};
+        Cursor currentExerciseCursor = db.query(true,
+                WorkoutDatabaseContract.WorkoutEntry.WORKOUT_ENTRY_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null,
+                null);
+
+        //add records from database query
+        if (currentExerciseCursor != null) {
+            String[] currentWorkout = new String[currentExerciseCursor.getCount()];
+            int counter = 0;
+            if (currentExerciseCursor.moveToFirst()) {
+                do {
+                    String currentExercise = currentExerciseCursor.getString(currentExerciseCursor.getColumnIndex(
+                            WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME
+                    ));
+
+                    currentWorkout[counter] = currentExercise;
+                    counter++;
+                }
+                while (currentExerciseCursor.moveToNext());
+                currentExerciseCursor.close();
+
+                String[] distinctArray = new HashSet<>(Arrays.asList(currentWorkout)).toArray(new String[0]);
+
+                homeActivityTitle.setText(R.string.current_workout);
+                mCursorRecyclerViewAdapter.setData(distinctArray);
+                homeActivityTitle.setVisibility(View.VISIBLE);
+                promptUserAddExercise.setVisibility(View.GONE);
+                homeActivityRecyclerView.setVisibility(View.VISIBLE);
+            }else {
+                customWorkoutQuery();
+            }
+        }
+
+    }
+
+    public void customWorkoutQuery(){
+        String[] columnSelection = {WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME};
+        Cursor workoutQueryCursor = db.query(true,
+                WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE,
+                columnSelection,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if (workoutQueryCursor != null) {
+            String[] savedWorkouts = new String[workoutQueryCursor.getCount()];
+            int counter = 0;
+            if (workoutQueryCursor.moveToFirst()) {
+                do {
+                    String currentExercise = workoutQueryCursor.getString(workoutQueryCursor.getColumnIndex(
+                            WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME
+                    ));
+
+                    savedWorkouts[counter] = currentExercise;
+                    counter++;
+                }
+                while (workoutQueryCursor.moveToNext());
+                workoutQueryCursor.close();
+
+                homeActivityTitle.setText(R.string.saved_workouts);
+                mCursorRecyclerViewAdapter.setData(savedWorkouts);
+                homeActivityTitle.setVisibility(View.VISIBLE);
+                promptUserAddExercise.setVisibility(View.GONE);
+                homeActivityRecyclerView.setVisibility(View.VISIBLE);
+                savedWorkoutSelected = true;
+            } else{
+                promptUserAddExercise.setVisibility(View.VISIBLE);
+                homeActivityTitle.setVisibility(View.GONE);
+                homeActivityRecyclerView.setVisibility(View.GONE);
+            }
         }
 
     }
