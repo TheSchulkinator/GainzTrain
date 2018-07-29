@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -108,7 +107,8 @@ public class CustomWorkoutDetailActivity extends AppCompatActivity implements Cu
     public void customQueryArray() {
 
         String[] selectionArgs = {customWorkoutDetail};
-        String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME + "=?";
+        String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME + "=? AND " +
+                WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE + " IS NOT NULL";
         Cursor workoutQueryCursor = db.query(false,
                 WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE,
                 null,
