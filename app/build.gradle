@@ -27,6 +27,10 @@ android {
             resValue 'string', "admob_api_key", adMobApiKey
             signingConfig signingConfigs.config
         }
+        debug{
+            buildConfigField 'String', "adMobApiKey", adMobApiKey
+            resValue 'string', "admob_api_key", adMobApiKey
+        }
     }
 }
 
