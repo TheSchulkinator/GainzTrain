@@ -14,8 +14,8 @@ android {
         applicationId "theschulk.com.gainztrain"
         minSdkVersion 22
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.1"
+        versionCode 6
+        versionName "1.21"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -24,12 +24,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "adMobApiKey", adMobApiKey
-            resValue 'string', "admob_api_key", adMobApiKey
+            resValue 'string', "admob_api_key", adMobApiResKey
             signingConfig signingConfigs.config
         }
         debug{
             buildConfigField 'String', "adMobApiKey", adMobApiKey
-            resValue 'string', "admob_api_key", adMobApiKey
+            resValue 'string', "admob_api_key", adMobApiResKey
         }
     }
 }
