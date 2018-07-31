@@ -31,10 +31,8 @@ import theschulk.com.gainztrain.Database.WorkoutDatabaseContract.WorkoutEntry;
 import theschulk.com.gainztrain.R;
 
 public class AddExerciseActivity extends AppCompatActivity
-        implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>,
-        CursorRecyclerViewAdapter.CursorOnClickHandler{
+        implements CursorRecyclerViewAdapter.CursorOnClickHandler{
 
-    public static final int URL_ADD_EXERCISE_LOADER = 2;
     private String columnFilterString;
     private CursorRecyclerViewAdapter mCursorRecyclerViewAdapter;
     RecyclerView.LayoutManager mLayoutManager;
@@ -59,94 +57,17 @@ public class AddExerciseActivity extends AppCompatActivity
         } else {
             intentWorkoutString = null;
         }
+        WorkoutDBHelper dbHelper = new WorkoutDBHelper(this);
+        db = dbHelper.getWritableDatabase();
+        db = dbHelper.getReadableDatabase();
 
         mCursorRecyclerViewAdapter = new CursorRecyclerViewAdapter(this);
 
-        getSupportLoaderManager().initLoader(URL_ADD_EXERCISE_LOADER, null, this);
+        queryCurrentExercise();
 
         mLayoutManager = new LinearLayoutManager(this);
         addExerciseRecyclerView.setLayoutManager(mLayoutManager);
         addExerciseRecyclerView.setAdapter(mCursorRecyclerViewAdapter);
-
-        WorkoutDBHelper dbHelper = new WorkoutDBHelper(this);
-        db = dbHelper.getWritableDatabase();
-
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        LoaderManager loaderManager = getSupportLoaderManager();
-        Loader<Cursor> workoutLoader = loaderManager.getLoader(URL_ADD_EXERCISE_LOADER);
-        if(workoutLoader == null){
-            loaderManager.
-                    initLoader(URL_ADD_EXERCISE_LOADER, null, this).
-                    forceLoad();
-        }else {
-            loaderManager.
-                    restartLoader(URL_ADD_EXERCISE_LOADER, null, this).
-                    forceLoad();
-
-        }
-    }
-
-    @Override
-    public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri authorityUri = WorkoutDatabaseContract.WorkoutEntry.BASE_CONTENT_URI;
-        Uri pathUri;
-
-        switch (id){
-            case URL_ADD_EXERCISE_LOADER:
-                String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_MUSCLE_GROUP
-                        + " = ? ";
-                String[] selectionArgs = {columnFilterString};
-                pathUri = authorityUri.buildUpon().
-                        appendPath(WorkoutDatabaseContract.WorkoutEntry.MUSCLE_GROUP_TABLE).
-                        build();
-                return new CursorLoader(this, pathUri, null, selection, selectionArgs,  null);
-           /* case URL_SAVED_WORKOUT_LOADER:
-                String[] projection = {WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME};
-                pathUri = authorityUri.buildUpon().
-                        appendPath(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE).
-                        build();
-                return new CursorLoader(this, pathUri, projection, null, null, null);*/
-            default:
-                return null;
-
-
-        }
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull android.support.v4.content.Loader<Cursor> loader, Cursor data) {
-        if (data != null) {
-            switch (loader.getId()) {
-                case URL_ADD_EXERCISE_LOADER:
-                    String[] exerciseNamesByMuscleGroup = new String[data.getCount()];
-                    int counter = 0;
-                    if (data.moveToFirst()) {
-                        do {
-                            String currentExercise = data.getString(data.getColumnIndex(
-                                    WorkoutEntry.COLUMN_NAME_EXERCISE_NAME
-                            ));
-
-                            exerciseNamesByMuscleGroup[counter] = currentExercise;
-                            counter++;
-                        }
-                        while (data.moveToNext());
-                        mCursorRecyclerViewAdapter.setData(exerciseNamesByMuscleGroup);
-                        break;
-                    }
-                    break;
-            }
-        }
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-
     }
 
     @Override
@@ -215,5 +136,38 @@ public class AddExerciseActivity extends AppCompatActivity
         Intent intent = new Intent(context, EnterWorkoutActivity.class);
         intent.putExtra(Intent.EXTRA_TEXT, exerciseToEnter);
         startActivity(intent);
+    }
+
+    public void queryCurrentExercise() {
+        //query for current records in the database
+        String selection = WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_MUSCLE_GROUP
+                + "=?";
+        String[] selectionArgs = {columnFilterString};
+        Cursor workoutQueryCursor = db.query(false,
+                WorkoutEntry.MUSCLE_GROUP_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null,
+                null);
+
+        //set recycler view data to records returned from DB
+        String[] exerciseNamesByMuscleGroup = new String[workoutQueryCursor.getCount()];
+        int counter = 0;
+        if (workoutQueryCursor.moveToFirst()) {
+            do {
+                String currentExercise = workoutQueryCursor.getString(workoutQueryCursor.getColumnIndex(
+                        WorkoutEntry.COLUMN_NAME_EXERCISE_NAME
+                ));
+
+                exerciseNamesByMuscleGroup[counter] = currentExercise;
+                counter++;
+            }
+            while (workoutQueryCursor.moveToNext());
+            mCursorRecyclerViewAdapter.setData(exerciseNamesByMuscleGroup);
+
+        }
     }
 }
