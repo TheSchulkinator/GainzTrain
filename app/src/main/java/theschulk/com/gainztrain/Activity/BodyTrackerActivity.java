@@ -63,6 +63,18 @@ public class BodyTrackerActivity extends AppCompatActivity {
         viewPager.setAdapter(imageViewAdapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        imageViewAdapter = new ImageViewAdapter(this);
+        File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        files = directory.listFiles();
+        imageViewAdapter.setFiles(files);
+        ViewPager viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(imageViewAdapter);
+    }
+
+
     public void onClickSubmitUserInfo(View view){
         //get string from edit text
         String editWeightString = editUserWeight.getText().toString();

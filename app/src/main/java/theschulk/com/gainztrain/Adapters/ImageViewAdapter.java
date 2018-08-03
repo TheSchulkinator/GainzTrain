@@ -2,6 +2,7 @@ package theschulk.com.gainztrain.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+import theschulk.com.gainztrain.Activity.BodyTrackerActivity;
 import theschulk.com.gainztrain.R;
 
 public class ImageViewAdapter extends PagerAdapter {
@@ -64,8 +66,17 @@ public class ImageViewAdapter extends PagerAdapter {
                             public void onClick(DialogInterface dialog, int which) {
                                 File deleteFile = files[position];
                                 if(deleteFile.exists()){
-                                    deleteFile.delete();
+                                    try {
+                                        deleteFile.delete();
+                                    }
+                                    catch (Exception e){
+                                        throw new IllegalStateException("Picture was not deleted");
+                                    }
                                 }
+                                //Create an intent to reload screen when dialog closed
+                                Intent intent = new Intent(context, BodyTrackerActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                context.startActivity(intent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -75,7 +86,7 @@ public class ImageViewAdapter extends PagerAdapter {
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-                return false;
+                return true;
             }
         });
 
