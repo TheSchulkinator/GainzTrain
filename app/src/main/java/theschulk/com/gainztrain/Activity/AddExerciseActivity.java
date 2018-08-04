@@ -76,7 +76,7 @@ public class AddExerciseActivity extends AppCompatActivity
         if(intentWorkoutString != null){
             contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME, intentWorkoutString);
             contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE, selectedExercise);
-            db.insert(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, null, contentValues);
+            db.insert(WorkoutEntry.WORKOUT_ENTRY_TABLE, null, contentValues);
             Intent intent = new Intent(this,CustomWorkoutActivity.class);
             startActivity(intent);
         } else {
