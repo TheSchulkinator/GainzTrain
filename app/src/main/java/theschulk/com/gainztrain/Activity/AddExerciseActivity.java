@@ -74,9 +74,10 @@ public class AddExerciseActivity extends AppCompatActivity
     public void onClick(String selectedExercise) {
         ContentValues contentValues = new ContentValues();
         if(intentWorkoutString != null){
+            contentValues = new ContentValues();
             contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME, intentWorkoutString);
             contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE, selectedExercise);
-            db.insert(WorkoutEntry.WORKOUT_ENTRY_TABLE, null, contentValues);
+            db.insert(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, null, contentValues);
             Intent intent = new Intent(this,CustomWorkoutActivity.class);
             startActivity(intent);
         } else {
@@ -108,10 +109,15 @@ public class AddExerciseActivity extends AppCompatActivity
                 contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_WORKOUT_NAME, intentWorkoutString);
                 contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE, editTextString);
                 db.insert(WorkoutDatabaseContract.WorkoutEntry.CUSTOM_WORKOUT_TABLE, null, contentValues);
+
+                ContentValues muscleGroupContentValues = new ContentValues();
+                muscleGroupContentValues.put(WorkoutEntry.COLUMN_NAME_EXERCISE_NAME, editTextString);
+                muscleGroupContentValues.put(WorkoutEntry.COLUMN_NAME_MUSCLE_GROUP, columnFilterString);
+                db.insert(WorkoutEntry.MUSCLE_GROUP_TABLE, null, muscleGroupContentValues);
+
                 Intent intent = new Intent(this, CustomWorkoutActivity.class);
                 startActivity(intent);
             } else {
-
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(WorkoutEntry.COLUMN_NAME_WORKOUT_EXERCISE_NAME, editTextString);
                 contentValues.put(WorkoutEntry.COLUMN_NAME_DATE, currentDate);
