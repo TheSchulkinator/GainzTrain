@@ -42,17 +42,12 @@ public class BodyTrackerActivity extends AppCompatActivity {
     ImageViewAdapter imageViewAdapter;
 
     @BindView(R.id.edit_user_weight) EditText editUserWeight;
-    @BindView(R.id.edit_user_height) EditText editUserHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_body_tracker);
         ButterKnife.bind(this);
-
-        WorkoutDBHelper dbHelper = new WorkoutDBHelper(this);
-        db = dbHelper.getWritableDatabase();
-        db = dbHelper.getReadableDatabase();
 
         //get the local camera files and set the pageradapter
         imageViewAdapter = new ImageViewAdapter(this);
@@ -72,38 +67,6 @@ public class BodyTrackerActivity extends AppCompatActivity {
         imageViewAdapter.setFiles(files);
         ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(imageViewAdapter);
-    }
-
-
-    public void onClickSubmitUserInfo(View view){
-        //get string from edit text
-        String editWeightString = editUserWeight.getText().toString();
-        String editHeightString = editUserHeight.getText().toString();
-
-        //add data to exercise table and to muscle group table for exercise to persist in future
-        if(editWeightString == null || editWeightString.equals("")) {
-            Toast toast = Toast.makeText(this, R.string.emptyEditTextToast, Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-
-
-            int editWeightInt = Integer.parseInt(editWeightString);
-
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_USER_WEIGHT, editWeightInt);
-
-            //only add height if value is entered
-            Boolean isHeightAvailable = editHeightString.equals("");
-            if(!isHeightAvailable){
-                int editHeightInt = Integer.parseInt(editHeightString);
-                contentValues.put(WorkoutDatabaseContract.WorkoutEntry.COLUMN_NAME_HEIGHT, editHeightInt);
-            }
-
-            db.insert(WorkoutDatabaseContract.WorkoutEntry.USER_INFO_TABLE, null, contentValues);
-
-            Toast toast = Toast.makeText(this, R.string.info_added, Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
 
     @Override
@@ -190,9 +153,20 @@ public class BodyTrackerActivity extends AppCompatActivity {
 
 
     private File createImageFile() throws IOException {
+        //save the user weight inside of the filename to display to the user
+        String editWeightString = editUserWeight.getText().toString();
+
+        //add data to exercise table and to muscle group table for exercise to persist in future
+        if(editWeightString == null || editWeightString.equals("")) {
+           /// Toast toast = Toast.makeText(this, R.string.emptyEditTextToast, Toast.LENGTH_SHORT);
+            //toast.show();
+            editWeightString = getString(R.string.no_user_weight);
+        }
+
+
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_" + editWeightString + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,
