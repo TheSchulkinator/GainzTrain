@@ -10,4 +10,16 @@
         android:contentDescription="@string/selfie_progress_picture"
         android:scaleType="center" />
 
+    <TextView
+        android:id="@+id/picture_date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/current_weight_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"/>
+
 </LinearLayout>
