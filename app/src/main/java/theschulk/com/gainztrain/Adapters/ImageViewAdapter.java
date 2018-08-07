@@ -11,13 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import theschulk.com.gainztrain.Activity.BodyTrackerActivity;
+import theschulk.com.gainztrain.Model.BodyTrackerModel;
 import theschulk.com.gainztrain.R;
+import theschulk.com.gainztrain.Utility.GainzUtility;
 
 public class ImageViewAdapter extends PagerAdapter {
 
@@ -46,6 +49,14 @@ public class ImageViewAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View view = layoutInflater.inflate(R.layout.adapter_image_view, container, false);
+
+        TextView dateTextView = view.findViewById(R.id.picture_date_tv);
+        TextView weightTextView = view.findViewById(R.id.current_weight_tv);
+
+        BodyTrackerModel bodyTrackerModel = GainzUtility.getBodyTrackerFromFile(files[position]);
+
+        dateTextView.setText(bodyTrackerModel.getPictureDate());
+        weightTextView.setText(bodyTrackerModel.getPictureWeight());
 
         ImageView imageView = view.findViewById(R.id.body_tracker_image_view);
         Picasso.get().load(files[position]).resize(1000,1000).centerCrop().into(imageView);

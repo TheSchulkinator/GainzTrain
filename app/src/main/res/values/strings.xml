@@ -125,11 +125,11 @@
 
     //BodyTracker
     <string name="body_tracker_title">Body Tracker</string>
-    <string name="user_height">Height: </string>
     <string name="edit_weight_error">Please enter a weight</string>
     <string name="info_added">Added Successfully</string>
     <string name="take_photo">Take Photo</string>
     <string name="camera_permission">Please Add Camera Permission To Use This Feature</string>
+    <string name="no_user_weight">No Weight Added</string>
 
     <string name="custom_workout_title">Select or Add a Custom Workout</string>
     <string name="add_otherWorkout">Add Other Workout</string>
