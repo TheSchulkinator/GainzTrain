@@ -90,27 +90,8 @@ public class BodyTrackerTest {
                         isDisplayed()));
         textView2.check(matches(withText("Weight:")));
 
-        ViewInteraction textView3 = onView(
-                allOf(withText("Height:"),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout3),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class),
-                                                2)),
-                                0),
-                        isDisplayed()));
-        textView3.check(matches(withText("Height:")));
 
 
-        ViewInteraction button = onView(
-                allOf(withId(R.id.submit_user_button), withContentDescription("Submit"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
 
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.take_photo), withContentDescription("Take Photo"),
