@@ -157,8 +157,8 @@ public class BodyTrackerActivity extends AppCompatActivity {
 
         //add data to exercise table and to muscle group table for exercise to persist in future
         if(editWeightString == null || editWeightString.equals("")) {
-           /// Toast toast = Toast.makeText(this, R.string.emptyEditTextToast, Toast.LENGTH_SHORT);
-            //toast.show();
+            Toast toast = Toast.makeText(this, R.string.error_no_weight_entered, Toast.LENGTH_LONG);
+            toast.show();
             editWeightString = getString(R.string.no_user_weight);
         }
 

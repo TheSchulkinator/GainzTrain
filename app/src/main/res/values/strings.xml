@@ -130,6 +130,7 @@
     <string name="take_photo">Take Photo</string>
     <string name="camera_permission">Please Add Camera Permission To Use This Feature</string>
     <string name="no_user_weight">No Weight Added</string>
+    <string name="error_no_weight_entered">Warning weight will not be saved with picture unless value is added!</string>
 
     <string name="custom_workout_title">Select or Add a Custom Workout</string>
     <string name="add_otherWorkout">Add Other Workout</string>

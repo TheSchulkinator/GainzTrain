@@ -101,6 +101,13 @@ public class ImageViewAdapter extends PagerAdapter {
             }
         });
 
+        weightTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
         container.addView(view);
 
         return view;
