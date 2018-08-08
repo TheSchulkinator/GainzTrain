@@ -114,7 +114,6 @@ public class BodyTrackerActivity extends AppCompatActivity {
                 if(grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
                     dispatchTakePictureIntent();
-                    galleryAddPic();
                 }else{
                     Toast toast = Toast.makeText(this, R.string.camera_permission, Toast.LENGTH_SHORT);
                     toast.show();
@@ -179,11 +178,4 @@ public class BodyTrackerActivity extends AppCompatActivity {
         return image;
     }
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
 }
