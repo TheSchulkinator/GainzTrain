@@ -154,5 +154,8 @@
     <string name="inches">inches</string>
     <string name="custom_workout_button_description">Add custom workout</string>
 
+    //alert dialog
+    <string name="edit_user_weight_dialog">Enter a new weight</string>
+
 
 </resources>
